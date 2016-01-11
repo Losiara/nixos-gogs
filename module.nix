@@ -191,8 +191,6 @@ in
         ExecStart = "${gogs}/bin/gogs web";
         Restart = "always";
       };
-
-      environment.GOGS_WORK_DIR = cfg.stateDir;
     };
 
     users.extraUsers = optionalAttrs (cfg.user == "git") (singleton {

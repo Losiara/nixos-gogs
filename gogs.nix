@@ -25,6 +25,6 @@ stdenv.mkDerivation {
     go install -tags '${builtins.concatStringsSep " " tags}' ${url}
     mkdir -p $out
     cp -r bin $out
-    wrapProgram $out/bin/gogs --prefix PATH : ${git}/bin
+    wrapProgram $out/bin/gogs --set GOGS_WORK_DIR . --prefix PATH : ${git}/bin
   '';
 }

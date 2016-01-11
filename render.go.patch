@@ -1,0 +1,17 @@
+diff --git a/src/gopkg.in/macaron.v1/render.go b/src/gopkg.in/macaron.v1/render.go
+index 3706e4f..8fea9c7 100644
+--- a/src/gopkg.in/macaron.v1/render.go
++++ b/src/gopkg.in/macaron.v1/render.go
+@@ -172,8 +172,10 @@ func NewTemplateFileSystem(opt RenderOptions, omitData bool) TplFileSystem {
+ 	fs := TplFileSystem{}
+ 	fs.files = make([]TemplateFile, 0, 10)
+ 
+-	if err := filepath.Walk(opt.Directory, func(path string, info os.FileInfo, err error) error {
+-		r, err := filepath.Rel(opt.Directory, path)
++	dir, _ := filepath.EvalSymlinks(opt.Directory)
++
++	if err := filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
++		r, err := filepath.Rel(dir, path)
+ 		if err != nil {
+ 			return err
+ 		}

@@ -1,4 +1,4 @@
-{ stdenv, go, git, cacert, url, tags ? [] }:
+{ stdenv, go, git, cacert, url, rev, tags ? [] }:
 
 stdenv.mkDerivation {
   name = builtins.replaceStrings ["/"] ["_"] url;
@@ -9,7 +9,12 @@ stdenv.mkDerivation {
   installPhase = ''
     export GIT_SSL_CAINFO=$cacert/etc/ssl/certs/ca-bundle.crt
     export GOPATH=$out
-    go get -d -tags '${builtins.concatStringsSep " " tags}' ${url}
+    repo=$out/src/${url}
+    mkdir -p $repo
+    git clone https://${url}.git $repo
+    cd $repo
+    git reset --hard ${rev}
+    go get -d -tags '${builtins.concatStringsSep " " tags}'
   '';
 
   inherit cacert;

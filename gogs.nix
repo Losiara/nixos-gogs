@@ -2,6 +2,7 @@
 
 let
   url = "github.com/gogits/gogs";
+  rev = "d324500959c06e975921790f8770aa5d1bdf2344";
   fetchgo = callPackage (import ./fetchgo.nix);
 in
 
@@ -11,7 +12,7 @@ stdenv.mkDerivation {
   inherit url;
 
   src = fetchgo {
-    inherit go url tags;
+    inherit go url rev tags;
   };
 
   buildInputs = [ makeWrapper go git ];

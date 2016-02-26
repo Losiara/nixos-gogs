@@ -16,9 +16,7 @@ stdenv.mkDerivation {
 
   buildInputs = [ makeWrapper go git ];
 
-  phases = [ "unpackPhase" "patchPhase" "installPhase" ];
-
-  patches = [ ./render.go.patch ];
+  phases = [ "unpackPhase" "installPhase" ];
 
   installPhase = ''
     export GOPATH=$PWD
